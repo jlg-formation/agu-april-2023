@@ -1,6 +1,6 @@
 console.log("About to start a web server...")
 
-import express from "express"
+import express, { NextFunction, Request, Response } from "express"
 import serveIndex from "serve-index"
 import api from "./api"
 
@@ -8,7 +8,7 @@ const app = express()
 const port: number = 3000
 const publicDir = "."
 
-app.use((req, res, next) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
   console.log(req.method, req.path)
   next()
 })
