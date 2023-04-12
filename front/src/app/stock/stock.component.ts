@@ -18,9 +18,6 @@ export class StockComponent implements OnDestroy {
 
   constructor(protected articleService: ArticleService) {
     console.log('articleService: ', articleService);
-    setTimeout(() => {
-      articleService.add({ name: 'Truc', price: 3.45, qty: 23 }).subscribe();
-    }, 2000);
   }
 
   ngOnDestroy(): void {
