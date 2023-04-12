@@ -1,7 +1,7 @@
 header {
   background-color: #eee;
   padding: 0 0.5em;
-  height: 3em;
+  height: var(--height);
   display: flex;
   align-items: center;
 
