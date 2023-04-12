@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { of, switchMap } from 'rxjs';
 import { NewArticle } from 'src/app/interfaces/article';
@@ -24,7 +24,8 @@ export class AddComponent {
 
   constructor(
     private readonly articleService: ArticleService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly route: ActivatedRoute
   ) {}
 
   submit() {
@@ -36,7 +37,7 @@ export class AddComponent {
           return this.articleService.add(newArticle);
         }),
         switchMap(() => {
-          return this.router.navigateByUrl('/stock');
+          return this.router.navigate(['..'], { relativeTo: this.route });
         })
       )
       .subscribe();
