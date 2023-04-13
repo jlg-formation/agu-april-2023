@@ -7,7 +7,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { ArticleService } from '../services/article.service';
 import { Article } from '../interfaces/article';
-import { Observable, of, switchMap, tap } from 'rxjs';
+import { Observable, catchError, of, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-stock',
@@ -32,7 +32,15 @@ export class StockComponent implements OnDestroy, OnInit {
 
   ngOnInit(): void {
     if (this.articleService.articles$.value === undefined) {
-      this.articleService.refresh().subscribe();
+      this.articleService
+        .refresh()
+        .pipe(
+          catchError((err) => {
+            this.errorMsg = err.message;
+            return of(undefined);
+          })
+        )
+        .subscribe();
     }
   }
 
