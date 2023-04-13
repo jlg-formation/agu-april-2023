@@ -19,7 +19,7 @@
   "Add an observable action": {
     "scope": "javascript,typescript",
     "prefix": "obs",
-    "body": ["of(undefined).pipe($1).subscribe()", "$2"],
+    "body": ["of(undefined).pipe($1);", "$2"],
     "description": "Add an observable action"
   }
 }
