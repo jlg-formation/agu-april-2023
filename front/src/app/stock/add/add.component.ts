@@ -44,6 +44,7 @@ export class AddComponent {
       .pipe(
         tap(() => {
           this.isSubmitting = true;
+          this.errorMsg = '';
         }),
         delay(2000),
         switchMap(() => {
