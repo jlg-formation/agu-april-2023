@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Article, NewArticle } from '../interfaces/article';
-import { BehaviorSubject, Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, Observable, delay, of, tap } from 'rxjs';
 import { generateId } from 'src/misc';
 
 @Injectable({
@@ -34,6 +34,7 @@ export class ArticleService {
 
   remove(ids: string[]): Observable<void> {
     return of(undefined).pipe(
+      delay(2000),
       tap(() => {
         this.#articles = this.#articles.filter((a) => !ids.includes(a.id));
         this.articles$.next(this.#articles);
