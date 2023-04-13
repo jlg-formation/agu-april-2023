@@ -8,7 +8,7 @@
       <a routerLink="add" class="button" title="Ajouter">
         <fa-icon [icon]="faPlus"></fa-icon>
       </a>
-      <button title="Supprimer">
+      <button title="Supprimer" [hidden]="selectedArticles.size === 0">
         <fa-icon [icon]="faTrashAlt"></fa-icon>
       </button>
     </nav>
@@ -21,7 +21,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let a of articleService.articles$ | async">
+        <tr
+          *ngFor="let a of articleService.articles$ | async"
+          (click)="select(a)"
+          [class.selected]="selectedArticles.has(a)"
+        >
           <td class="name">{{ a.name }}</td>
           <td class="price">{{ a.price }} €</td>
           <td class="qty">{{ a.qty }}</td>
