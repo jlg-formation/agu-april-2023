@@ -11,6 +11,11 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ArticleService } from './services/article.service';
 import { HttpArticleService } from './services/http-article.service';
 
+import { registerLocaleData } from '@angular/common';
+import localeFrBe from '@angular/common/locales/fr-BE';
+
+registerLocaleData(localeFrBe, 'fr-frameries');
+
 @NgModule({
   declarations: [AppComponent, HomeComponent, LegalComponent],
   imports: [

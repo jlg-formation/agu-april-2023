@@ -19,4 +19,11 @@ div.content {
     gap: 0.5em;
     justify-content: center;
   }
+
+  tbody {
+    .qty,
+    .price {
+      text-align: right;
+    }
+  }
 }
