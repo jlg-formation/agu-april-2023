@@ -47,10 +47,7 @@
           >
             <td class="name">{{ a.name | ellipsis : 12 }}</td>
             <td class="price">
-              {{
-                a.price
-                  | currency : "EUR" : "symbol" : undefined : "fr-frameries"
-              }}
+              {{ a.price | currency }}
             </td>
             <td class="qty">{{ a.qty }}</td>
           </tr>
