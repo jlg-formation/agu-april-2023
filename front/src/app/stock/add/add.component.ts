@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faCircleNotch, faPlus } from '@fortawesome/free-solid-svg-icons';
 import {
   catchError,
   delay,
@@ -29,6 +29,7 @@ export class AddComponent {
     qty: new FormControl(0, [Validators.required, Validators.min(0)]),
   });
   faPlus = faPlus;
+  faCircleNotch = faCircleNotch;
   isSubmitting = false;
   errorMsg = '';
 
