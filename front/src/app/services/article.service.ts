@@ -12,7 +12,7 @@ export class ArticleService {
     { id: 'a2', name: 'Pelle', price: 3.5, qty: 45 },
   ];
 
-  articles$ = new BehaviorSubject(this.#articles);
+  articles$ = new BehaviorSubject<Article[] | undefined>(undefined);
 
   constructor() {}
 
@@ -27,6 +27,15 @@ export class ArticleService {
           ...newArticle,
         };
         this.#articles.push(article);
+        this.articles$.next(this.#articles);
+      })
+    );
+  }
+
+  refresh(): Observable<void> {
+    return of(undefined).pipe(
+      delay(2000),
+      tap(() => {
         this.articles$.next(this.#articles);
       })
     );

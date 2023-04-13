@@ -1,5 +1,6 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
+  faCircleNotch,
   faPlus,
   faRotateRight,
   faTrashAlt,
@@ -13,12 +14,13 @@ import { Observable, of, switchMap, tap } from 'rxjs';
   templateUrl: './stock.component.html',
   styleUrls: ['./stock.component.scss'],
 })
-export class StockComponent implements OnDestroy {
+export class StockComponent implements OnDestroy, OnInit {
+  errorMsg = '';
+  faCircleNotch = faCircleNotch;
   faPlus = faPlus;
   faRotateRight = faRotateRight;
   faTrashAlt = faTrashAlt;
   selectedArticles = new Set<Article>();
-  errorMsg = '';
 
   constructor(protected articleService: ArticleService) {
     console.log('articleService: ', articleService);
@@ -26,6 +28,12 @@ export class StockComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     console.log('stock destroy');
+  }
+
+  ngOnInit(): void {
+    if (this.articleService.articles$.value === undefined) {
+      this.articleService.refresh().subscribe();
+    }
   }
 
   remove(): Observable<void> {
