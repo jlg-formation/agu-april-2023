@@ -13,7 +13,7 @@
       <span>Quantité</span>
       <input type="number" formControlName="qty" />
     </label>
-    <button type="submit" class="primary">
+    <button type="submit" class="primary" [disabled]="isSubmitting">
       <fa-icon [icon]="faPlus"></fa-icon>
       <span>Ajouter</span>
     </button>
