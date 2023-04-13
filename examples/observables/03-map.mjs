@@ -23,11 +23,17 @@ const map = (func) => {
   };
 };
 
+// Si on n'avait le pipe...
+// take(5)(startWith(0)(map((x) => x + 1)(interval(1000)))).subscribe({
+//   next: console.log,
+//   error: console.log,
+//   complete: () => console.log("complete"),
+// });
+
 interval(1000)
   .pipe(
     map((x) => x + 1),
-    startWith(0),
-    take(5)
+    startWith(0)
   )
   .subscribe({
     next: console.log,
