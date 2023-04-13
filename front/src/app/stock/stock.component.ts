@@ -48,6 +48,10 @@ export class StockComponent implements OnDestroy, OnInit {
     );
   }
 
+  refresh(): Observable<void> {
+    return this.articleService.refresh();
+  }
+
   resetErrorMsg() {
     this.errorMsg = '';
   }
