@@ -2,7 +2,15 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { delay, of, switchMap, tap } from 'rxjs';
+import {
+  catchError,
+  delay,
+  finalize,
+  of,
+  switchMap,
+  tap,
+  throwError,
+} from 'rxjs';
 import { NewArticle } from 'src/app/interfaces/article';
 import { ArticleService } from 'src/app/services/article.service';
 
@@ -22,6 +30,7 @@ export class AddComponent {
   });
   faPlus = faPlus;
   isSubmitting = false;
+  errorMsg = '';
 
   constructor(
     private readonly articleService: ArticleService,
@@ -44,7 +53,12 @@ export class AddComponent {
         switchMap(() => {
           return this.router.navigate(['..'], { relativeTo: this.route });
         }),
-        tap(() => {
+        catchError((err) => {
+          console.log('err: ', err);
+          this.errorMsg = 'Oups... Erreur technique.';
+          return of(undefined);
+        }),
+        finalize(() => {
           this.isSubmitting = false;
         })
       )

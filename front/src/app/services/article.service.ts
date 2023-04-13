@@ -19,6 +19,9 @@ export class ArticleService {
   add(newArticle: NewArticle): Observable<void> {
     return of(undefined).pipe(
       tap(() => {
+        if (newArticle.name === 'xxx') {
+          throw new Error('xxx is forbidden');
+        }
         const article: Article = {
           id: generateId(),
           ...newArticle,
