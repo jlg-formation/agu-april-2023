@@ -29,6 +29,7 @@ export class AsyncButtonComponent {
     return of(undefined).pipe(
       tap(() => {
         this.isRunning = true;
+        this.start.emit();
       }),
       switchMap(() => {
         return this.action;
