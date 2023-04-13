@@ -3,7 +3,7 @@ import { Article, NewArticle } from "./interfaces/article"
 
 const app = express.Router()
 
-const articles: Article[] = [
+let articles: Article[] = [
   { id: "a1", name: "Tournevis", price: 2.99, qty: 123 },
   { id: "a2", name: "Marteau", price: 3.5, qty: 45 },
 ]
@@ -30,6 +30,12 @@ app.post("/articles", (req, res) => {
   }
   articles.push(article)
   res.status(201).end()
+})
+
+app.delete("/articles", (req, res) => {
+  const ids: string[] = req.body
+  articles = articles.filter((a) => !ids.includes(a.id))
+  res.status(204).end()
 })
 
 export default app
