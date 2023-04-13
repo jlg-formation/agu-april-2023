@@ -7,12 +7,12 @@ import { generateId } from 'src/misc';
   providedIn: 'root',
 })
 export class ArticleService {
-  private articles: Article[] = [
+  #articles: Article[] = [
     { id: 'a1', name: 'Tournevis', price: 2.99, qty: 123 },
     { id: 'a2', name: 'Pelle', price: 3.5, qty: 45 },
   ];
 
-  articles$ = new BehaviorSubject(this.articles);
+  articles$ = new BehaviorSubject(this.#articles);
 
   constructor() {}
 
@@ -26,8 +26,8 @@ export class ArticleService {
           id: generateId(),
           ...newArticle,
         };
-        this.articles.push(article);
-        this.articles$.next(this.articles);
+        this.#articles.push(article);
+        this.articles$.next(this.#articles);
       })
     );
   }
@@ -35,8 +35,8 @@ export class ArticleService {
   remove(ids: string[]): Observable<void> {
     return of(undefined).pipe(
       tap(() => {
-        this.articles = this.articles.filter((a) => !ids.includes(a.id));
-        this.articles$.next(this.articles);
+        this.#articles = this.#articles.filter((a) => !ids.includes(a.id));
+        this.articles$.next(this.#articles);
       })
     );
   }
