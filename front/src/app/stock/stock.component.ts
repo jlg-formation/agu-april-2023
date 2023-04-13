@@ -18,6 +18,7 @@ export class StockComponent implements OnDestroy {
   faRotateRight = faRotateRight;
   faTrashAlt = faTrashAlt;
   selectedArticles = new Set<Article>();
+  errorMsg = '';
 
   constructor(protected articleService: ArticleService) {
     console.log('articleService: ', articleService);
@@ -39,11 +40,19 @@ export class StockComponent implements OnDestroy {
     );
   }
 
+  resetErrorMsg() {
+    this.errorMsg = '';
+  }
+
   select(a: Article) {
     if (this.selectedArticles.has(a)) {
       this.selectedArticles.delete(a);
       return;
     }
     this.selectedArticles.add(a);
+  }
+
+  setErrorMsg(error: Error) {
+    this.errorMsg = error.message;
   }
 }
