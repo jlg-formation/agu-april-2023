@@ -6,6 +6,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { ArticleService } from '../services/article.service';
 import { Article } from '../interfaces/article';
+import { Observable, of, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-stock',
@@ -16,7 +17,6 @@ export class StockComponent implements OnDestroy {
   faPlus = faPlus;
   faRotateRight = faRotateRight;
   faTrashAlt = faTrashAlt;
-
   selectedArticles = new Set<Article>();
 
   constructor(protected articleService: ArticleService) {
@@ -25,6 +25,18 @@ export class StockComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     console.log('stock destroy');
+  }
+
+  remove(): Observable<void> {
+    return of(undefined).pipe(
+      switchMap(() => {
+        const ids = [...this.selectedArticles].map((a) => a.id);
+        return this.articleService.remove(ids);
+      }),
+      tap(() => {
+        this.selectedArticles.clear();
+      })
+    );
   }
 
   select(a: Article) {
