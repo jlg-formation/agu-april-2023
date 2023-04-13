@@ -36,6 +36,9 @@ export class ArticleService {
     return of(undefined).pipe(
       delay(2000),
       tap(() => {
+        if (ids.length === 2) {
+          throw new Error('Pas possible de supprimer 2 elts');
+        }
         this.#articles = this.#articles.filter((a) => !ids.includes(a.id));
         this.articles$.next(this.#articles);
       })

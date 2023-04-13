@@ -3,7 +3,7 @@ import {
   IconDefinition,
   faCircleNotch,
 } from '@fortawesome/free-solid-svg-icons';
-import { Observable, finalize, of, switchMap, tap } from 'rxjs';
+import { Observable, catchError, finalize, of, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-async-button',
@@ -32,6 +32,12 @@ export class AsyncButtonComponent {
       }),
       switchMap(() => {
         return this.action;
+      }),
+      catchError((err) => {
+        console.log('err: ', err);
+        this.error.emit(err);
+
+        return of(undefined);
       }),
       finalize(() => {
         this.isRunning = false;
