@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ArticleService } from './article.service';
-import { Observable, catchError, map, of, switchMap } from 'rxjs';
+import { Observable, catchError, delay, map, of, switchMap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Article } from '../interfaces/article';
 
@@ -17,6 +17,7 @@ export class HttpArticleService extends ArticleService {
 
   override refresh(): Observable<void> {
     return of(undefined).pipe(
+      delay(300),
       switchMap(() => {
         return this.http.get<Article[]>(url);
       }),
