@@ -4,6 +4,11 @@
     <label>
       <span>Nom</span>
       <input type="text" formControlName="name" appAutofocus="select" />
+      <span class="error">
+        <span *ngIf="f.controls.name.invalid">
+          {{ "Le message est trop court" }}
+        </span>
+      </span>
     </label>
     <label>
       <span>Prix</span>
@@ -16,7 +21,11 @@
     <div class="error">
       {{ errorMsg }}
     </div>
-    <button type="submit" class="primary" [disabled]="isSubmitting">
+    <button
+      type="submit"
+      class="primary"
+      [disabled]="isSubmitting || f.invalid"
+    >
       <fa-icon
         [icon]="isSubmitting ? faCircleNotch : faPlus"
         [spin]="isSubmitting"

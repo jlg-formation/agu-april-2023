@@ -23,7 +23,7 @@ export class AddComponent {
   f = new FormGroup({
     name: new FormControl('Truc', [
       Validators.required,
-      Validators.maxLength(3),
+      Validators.minLength(3),
     ]),
     price: new FormControl(0, [Validators.required, Validators.min(0)]),
     qty: new FormControl(0, [Validators.required, Validators.min(0)]),
