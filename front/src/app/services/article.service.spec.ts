@@ -48,7 +48,7 @@ describe('ArticleService', () => {
     expect(service).toBeTruthy();
   }));
 
-  it('should remove', fakeAsync(() => {
+  it('should remove in error', fakeAsync(() => {
     let shouldGoHere = false;
     service
       .remove(['a1', 'a2'])
