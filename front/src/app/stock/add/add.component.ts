@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faCircleNotch, faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -6,7 +6,9 @@ import {
   catchError,
   delay,
   finalize,
+  map,
   of,
+  pairwise,
   switchMap,
   tap,
   throwError,
@@ -19,22 +21,45 @@ import { ArticleService } from 'src/app/services/article.service';
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.scss'],
 })
-export class AddComponent {
+export class AddComponent implements OnInit {
+  errorMsg = '';
   f = new FormGroup({
     name: new FormControl('', [Validators.minLength(3), Validators.required]),
     price: new FormControl(0, [Validators.required, Validators.min(0)]),
-    qty: new FormControl(0, [Validators.required, Validators.min(0)]),
+    qty: new FormControl('0', [Validators.required, Validators.min(0)]),
   });
-  faPlus = faPlus;
   faCircleNotch = faCircleNotch;
+  faPlus = faPlus;
   isSubmitting = false;
-  errorMsg = '';
 
   constructor(
     private readonly articleService: ArticleService,
     private readonly router: Router,
     private readonly route: ActivatedRoute
   ) {}
+
+  ngOnInit(): void {
+    let lastCorrectQty = '0';
+    this.f.controls.qty.valueChanges
+      .pipe(
+        map((value) => {
+          console.log('value: ', value);
+          if (value === null) {
+            return null;
+          }
+          if (value.match(/^\d*$/)) {
+            console.log('value: ', value);
+            lastCorrectQty = value;
+            return value;
+          }
+          return lastCorrectQty;
+        })
+      )
+      .subscribe((value) => {
+        console.log('value: ', value, typeof value);
+        this.f.controls.qty.setValue(value, { emitEvent: false });
+      });
+  }
 
   submit() {
     console.log('submit');
@@ -46,7 +71,11 @@ export class AddComponent {
         }),
         delay(2000),
         switchMap(() => {
-          const newArticle = this.f.value as NewArticle;
+          const newArticle: NewArticle = {
+            name: this.f.value.name as string,
+            price: this.f.value.price as number,
+            qty: Number(this.f.value.qty),
+          };
           return this.articleService.add(newArticle);
         }),
         switchMap(() => {
