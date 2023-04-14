@@ -55,7 +55,7 @@ export class AddComponent implements OnInit {
           this.isSubmitting = true;
           this.errorMsg = '';
         }),
-        delay(2000),
+        delay(300),
         switchMap(() => {
           const newArticle: NewArticle = {
             name: this.f.value.name as string,
