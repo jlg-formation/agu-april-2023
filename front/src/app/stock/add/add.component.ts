@@ -9,6 +9,8 @@ import {
   map,
   of,
   pairwise,
+  reduce,
+  scan,
   switchMap,
   tap,
   throwError,
@@ -39,30 +41,26 @@ export class AddComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    let lastCorrectQty = '0';
     this.f.controls.qty.valueChanges
       .pipe(
-        map((value) => {
-          console.log('value: ', value);
+        scan((acc, value) => {
           if (value === null) {
-            return null;
+            acc = null;
+            return acc;
           }
           if (value.match(/^\d*$/)) {
-            console.log('value: ', value);
-            lastCorrectQty = value;
-            return value;
+            acc = value;
+            return acc;
           }
-          return lastCorrectQty;
-        })
+          return acc;
+        }, '0' as string | null)
       )
       .subscribe((value) => {
-        console.log('value: ', value, typeof value);
         this.f.controls.qty.setValue(value, { emitEvent: false });
       });
   }
 
   submit() {
-    console.log('submit');
     of(void 0)
       .pipe(
         tap(() => {
@@ -85,7 +83,6 @@ export class AddComponent implements OnInit {
           return this.router.navigate(['..'], { relativeTo: this.route });
         }),
         catchError((err) => {
-          console.log('err: ', err);
           this.errorMsg = 'Oups... Erreur technique.';
           return of(undefined);
         }),
