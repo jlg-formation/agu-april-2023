@@ -5,7 +5,7 @@
       <span>Nom</span>
       <input type="text" formControlName="name" appAutofocus="select" />
       <span class="error">
-        <span *ngIf="f.controls.name.invalid">
+        <span *ngIf="f.controls.name.invalid && f.controls.name.touched">
           <span *ngIf="f.controls.name.errors?.['minlength']">
             Le nom doit avoir au moins
             {{ f.controls.name.errors?.['minlength'].requiredLength}}
@@ -18,12 +18,26 @@
       </span>
     </label>
     <label>
-      <span>Prix</span>
+      <span>Prix (€)</span>
       <input type="number" formControlName="price" />
+      <span class="error">
+        <span *ngIf="f.controls.price.invalid && f.controls.price.touched">
+          <span *ngIf="f.controls.price.errors?.['required']">
+            Champs requis.
+          </span>
+        </span>
+      </span>
     </label>
     <label>
       <span>Quantité</span>
       <input type="number" formControlName="qty" />
+      <span class="error">
+        <span *ngIf="f.controls.qty.invalid && f.controls.qty.touched">
+          <span *ngIf="f.controls.qty.errors?.['required']">
+            Champs requis.
+          </span>
+        </span>
+      </span>
     </label>
     <div class="error">
       {{ errorMsg }}
@@ -40,5 +54,4 @@
       <span>Ajouter</span>
     </button>
   </form>
-  {{ f.value | json }}
 </main>

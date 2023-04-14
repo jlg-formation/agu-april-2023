@@ -21,10 +21,7 @@ import { ArticleService } from 'src/app/services/article.service';
 })
 export class AddComponent {
   f = new FormGroup({
-    name: new FormControl('Truc', [
-      Validators.minLength(3),
-      Validators.required,
-    ]),
+    name: new FormControl('', [Validators.minLength(3), Validators.required]),
     price: new FormControl(0, [Validators.required, Validators.min(0)]),
     qty: new FormControl(0, [Validators.required, Validators.min(0)]),
   });
