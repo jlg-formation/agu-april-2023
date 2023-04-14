@@ -20,14 +20,42 @@ describe('HttpArticleService', () => {
     ctrl = TestBed.inject(HttpTestingController);
   });
 
+  afterEach(() => {
+    ctrl.verify();
+  });
+
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should add a new article', () => {
+  it('should add a new article', fakeAsync(() => {
     service.add(newArticle).subscribe();
+    tick(300);
+    const req = ctrl.expectOne(url);
+    expect(req.request.method).toEqual('POST');
+    req.flush('', { status: 201, statusText: 'Created' });
     expect(service).toBeTruthy();
-  });
+  }));
+
+  it('should add a new article in error', fakeAsync(() => {
+    let shouldGoHere = false;
+    service
+      .add(newArticle)
+      .pipe(
+        catchError(() => {
+          shouldGoHere = true;
+          return of(undefined);
+        })
+      )
+      .subscribe();
+    tick(300);
+    const req = ctrl.expectOne(url);
+    expect(req.request.method).toEqual('POST');
+    req.flush('', { status: 500, statusText: 'Internal Error' });
+    flush();
+    expect(service).toBeTruthy();
+    expect(shouldGoHere).toBe(true);
+  }));
 
   it('should refresh', fakeAsync(() => {
     service.refresh().subscribe();
@@ -60,7 +88,30 @@ describe('HttpArticleService', () => {
 
   it('should remove', fakeAsync(() => {
     service.remove([]).subscribe();
-    tick(2000);
+    tick(300);
+    const req = ctrl.expectOne(url);
+    expect(req.request.method).toEqual('DELETE');
+    req.flush('', { status: 204, statusText: 'No Content' });
     expect(service).toBeTruthy();
+  }));
+
+  it('should remove in error', fakeAsync(() => {
+    let shouldGoHere = false;
+    service
+      .remove([])
+      .pipe(
+        catchError(() => {
+          shouldGoHere = true;
+          return of(undefined);
+        })
+      )
+      .subscribe();
+    tick(300);
+    const req = ctrl.expectOne(url);
+    expect(req.request.method).toEqual('DELETE');
+    req.flush('', { status: 500, statusText: 'Internal Error' });
+    flush();
+    expect(service).toBeTruthy();
+    expect(shouldGoHere).toBe(true);
   }));
 });
