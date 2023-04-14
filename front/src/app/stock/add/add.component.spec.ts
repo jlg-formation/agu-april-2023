@@ -9,8 +9,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { throwError } from 'rxjs';
 import { AddComponent } from './add.component';
-import { of, throwError } from 'rxjs';
 
 describe('AddComponent', () => {
   let component: AddComponent;
