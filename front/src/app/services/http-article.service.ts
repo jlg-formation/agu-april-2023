@@ -4,7 +4,7 @@ import { Observable, catchError, delay, map, of, switchMap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Article, NewArticle } from '../interfaces/article';
 
-export const url = 'http://localhost:3000/api/articles';
+export const url = '/api/articles';
 
 @Injectable({
   providedIn: 'root',
