@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AsyncButtonComponent } from './async-button.component';
+import { FontAwesomeTestingModule } from '@fortawesome/angular-fontawesome/testing';
 
 describe('AsyncButtonComponent', () => {
   let component: AsyncButtonComponent;
@@ -8,9 +9,9 @@ describe('AsyncButtonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AsyncButtonComponent ]
-    })
-    .compileComponents();
+      imports: [FontAwesomeTestingModule],
+      declarations: [AsyncButtonComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AsyncButtonComponent);
     component = fixture.componentInstance;
