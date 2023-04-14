@@ -16,7 +16,7 @@ form {
       padding: 0.5em 1em;
 
       &.ng-invalid {
-        border: 0.1em solid red;
+        border-color: red;
         outline-color: red;
       }
     }
