@@ -22,7 +22,7 @@ export class StockComponent implements OnDestroy, OnInit {
   faTrashAlt = faTrashAlt;
   selectedArticles = new Set<Article>();
 
-  constructor(public articleService: ArticleService) {
+  constructor(protected articleService: ArticleService) {
     console.log('articleService: ', articleService);
   }
 

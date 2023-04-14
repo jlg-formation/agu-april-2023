@@ -59,7 +59,7 @@ describe('StockComponent', () => {
   }));
 
   it('should ngInit with error', fakeAsync(() => {
-    const refresh = spyOn(component.articleService, 'refresh');
+    const refresh = spyOn(component['articleService'], 'refresh');
     refresh.and.returnValue(
       throwError(() => {
         return new Error('oups');
