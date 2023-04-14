@@ -1,4 +1,4 @@
-import { TestBed, fakeAsync } from '@angular/core/testing';
+import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { ArticleService } from './article.service';
 import { newArticle } from 'src/test/article.data';
@@ -32,6 +32,34 @@ describe('ArticleService', () => {
         })
       )
       .subscribe();
+    expect(service).toBeTruthy();
+    expect(shouldGoHere).toBe(true);
+  }));
+
+  it('should refresh', fakeAsync(() => {
+    service.refresh().subscribe();
+    tick(2000);
+    expect(service).toBeTruthy();
+  }));
+
+  it('should remove', fakeAsync(() => {
+    service.remove([]).subscribe();
+    tick(2000);
+    expect(service).toBeTruthy();
+  }));
+
+  it('should remove', fakeAsync(() => {
+    let shouldGoHere = false;
+    service
+      .remove(['a1', 'a2'])
+      .pipe(
+        catchError(() => {
+          shouldGoHere = true;
+          return of(undefined);
+        })
+      )
+      .subscribe();
+    tick(2000);
     expect(service).toBeTruthy();
     expect(shouldGoHere).toBe(true);
   }));
