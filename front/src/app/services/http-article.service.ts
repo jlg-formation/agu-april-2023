@@ -21,7 +21,7 @@ export class HttpArticleService extends ArticleService {
       switchMap(() => {
         return this.http.get<Article[]>(url);
       }),
-      catchError((err) => {
+      catchError(() => {
         this.articles$.next([]);
         throw new Error('Erreur de chargement');
       }),
@@ -38,6 +38,7 @@ export class HttpArticleService extends ArticleService {
         return this.http.post<void>(url, newArticle);
       }),
       catchError((err) => {
+        console.error('err: ', err);
         throw new Error('Erreur technique');
       })
     );
@@ -50,6 +51,7 @@ export class HttpArticleService extends ArticleService {
         return this.http.delete<void>(url, { body: ids });
       }),
       catchError((err) => {
+        console.error('err: ', err);
         throw new Error('Erreur technique');
       })
     );

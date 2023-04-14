@@ -2,19 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faCircleNotch, faPlus } from '@fortawesome/free-solid-svg-icons';
-import {
-  catchError,
-  delay,
-  finalize,
-  map,
-  of,
-  pairwise,
-  reduce,
-  scan,
-  switchMap,
-  tap,
-  throwError,
-} from 'rxjs';
+import { catchError, delay, finalize, of, scan, switchMap, tap } from 'rxjs';
 import { NewArticle } from 'src/app/interfaces/article';
 import { ArticleService } from 'src/app/services/article.service';
 
@@ -82,7 +70,7 @@ export class AddComponent implements OnInit {
         switchMap(() => {
           return this.router.navigate(['..'], { relativeTo: this.route });
         }),
-        catchError((err) => {
+        catchError(() => {
           this.errorMsg = 'Oups... Erreur technique.';
           return of(undefined);
         }),

@@ -14,13 +14,13 @@ export class AsyncButtonComponent {
   @Input()
   action: Observable<void> = of(undefined);
   @Output()
-  error = new EventEmitter<Error>();
+  err = new EventEmitter<Error>();
   @Input()
   icon: IconDefinition = faCircleNotch;
   @Input()
-  label: string = '';
+  label = '';
   @Output()
-  start = new EventEmitter<void>();
+  trigger = new EventEmitter<void>();
 
   isRunning = false;
   faCircleNotch = faCircleNotch;
@@ -29,14 +29,14 @@ export class AsyncButtonComponent {
     return of(undefined).pipe(
       tap(() => {
         this.isRunning = true;
-        this.start.emit();
+        this.trigger.emit();
       }),
       switchMap(() => {
         return this.action;
       }),
       catchError((err) => {
         console.log('err: ', err);
-        this.error.emit(err);
+        this.err.emit(err);
 
         return of(undefined);
       }),

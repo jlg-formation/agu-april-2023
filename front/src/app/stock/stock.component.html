@@ -6,8 +6,8 @@
         [action]="refresh()"
         [icon]="faRotateRight"
         label="Rafraîchir"
-        (start)="resetErrorMsg()"
-        (error)="setErrorMsg($event)"
+        (trigger)="resetErrorMsg()"
+        (err)="setErrorMsg($event)"
       ></app-async-button>
       <a routerLink="add" class="button" title="Ajouter">
         <fa-icon [icon]="faPlus"></fa-icon>
@@ -17,8 +17,8 @@
         [action]="remove()"
         [icon]="faTrashAlt"
         label="Supprimer"
-        (start)="resetErrorMsg()"
-        (error)="setErrorMsg($event)"
+        (trigger)="resetErrorMsg()"
+        (err)="setErrorMsg($event)"
       ></app-async-button>
     </nav>
     <div class="error">{{ errorMsg }}</div>
